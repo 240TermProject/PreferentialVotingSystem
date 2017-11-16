@@ -1,4 +1,6 @@
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 public class ElectionProcess {
 	/*
@@ -15,8 +17,15 @@ public class ElectionProcess {
 	}
 	
 	//starts the election
-	public void beginElection(){
-		
+	public void beginElection() throws FileNotFoundException{
+		Scanner s = new Scanner(candidates);
+		String nextline = "";
+		String votes = "";
+		String cand = "";
+		while(s.hasNextLine()) {
+			nextline = s.nextLine();
+			System.out.println(nextline);
+		}
 	}
 	
 	//ends the election

@@ -1,8 +1,11 @@
+import java.io.FileNotFoundException;
 
 public class Election {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileNotFoundException {
 		//do stuff
+		ElectionProcess election = new ElectionProcess();
+		election.beginElection();
 	}
 	
 	/*
