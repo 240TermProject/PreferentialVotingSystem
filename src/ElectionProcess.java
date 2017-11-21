@@ -9,7 +9,8 @@ public class ElectionProcess {
 	 * 	
 	 * 	Every Voter's vote
 	 */
-	File candidates = new File("candidates.txt"); 
+	File candidates = new File("candidates.txt");
+	File votes = new File("voters.txt");
 	
 	//default constructor
 	public ElectionProcess(){
@@ -18,13 +19,26 @@ public class ElectionProcess {
 	
 	//starts the election
 	public void beginElection() throws FileNotFoundException{
-		Scanner s = new Scanner(candidates);
-		String nextline = "";
-		String votes = "";
-		String cand = "";
-		while(s.hasNextLine()) {
-			nextline = s.nextLine();
-			System.out.println(nextline);
+		Scanner scanCands = new Scanner(candidates);
+		int candNum = 0;
+		while(scanCands.hasNextLine()) {
+			//System.out.println(scanCands.nextLine());
+			Candidate newCand = new Candidate(candNum, scanCands.nextLine());
+			//Need to add the candidate to a list in iterator
+			candNum++;
+		}
+		Scanner scanVoters = new Scanner(votes);
+		while(scanVoters.hasNextLine()) {
+			System.out.println(scanVoters.nextLine());
+			Voter newVoter = new Voter(scanVoters.nextLine());
+			int[] ranks = new int[candNum];
+			//add try catch for null ranks/votes inn the index i
+			for (int i = 0; i <= candNum; i++){
+				ranks[i] = scanVoters.nextInt();
+			}
+			newVoter.loadVote(ranks);
+			//Need to add the voter to a list in iterator
+			
 		}
 	}
 	

@@ -22,7 +22,7 @@ public class Voter{
 	}
 	
 	//loads the individual voter's votes into this class
-	private void loadVote(int[] indVote){
+	public void loadVote(int[] indVote){
 		
 	}
 	
