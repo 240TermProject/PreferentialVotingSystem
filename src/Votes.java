@@ -1,13 +1,17 @@
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Votes extends main{
 	// Contains all of the voter's globalIDs
 	private static ArrayList<String> voterIDs = new ArrayList<String>();
 	// Contains all of a voter's individual votes
 	private static ArrayList<ArrayList<String>> indVotes = new ArrayList<ArrayList<String>>();
+	//Checks to see if there are no candidates in the arraylist
+	static boolean noCandidates = true;
 
 	public static void Votes() throws IOException {
 		// Set URL of raw vote data
@@ -18,7 +22,10 @@ public class Votes extends main{
 		while (dataScanner.hasNextLine()) {
 			String vote = dataScanner.nextLine();
 			String[] data = vote.split("[,]");
-
+			if(noCandidates) {
+				storeCandidates(data);
+				noCandidates = false;
+			}
 			if (!checkID(data[0])) {
 				continue;
 			} else {
@@ -52,6 +59,34 @@ public class Votes extends main{
 		}
 		indVotes.add(votes);
 
+	}
+	
+	public static void storeCandidates(String[] data) {
+		/*
+		 * I would just loop through these, but if we have primary
+		 * keys for candidate, that means that their primary keys
+		 * would be based off of the first person's vote. As a 
+		 * result, I randomly generated them. Change pklength if
+		 * we want a different pk than just data.length.
+		 * 
+		 */
+		ArrayList<Integer> pkList = new ArrayList<Integer>();
+		Candidate c;
+		int pklength = data.length;
+		for(int i = 1; i < data.length; i++) {
+			pkList.add(i);
+		}
+		for(int i = 1; i < data.length; i++) {
+			if(pklength - 1 != 1) {
+				int randomNum = ThreadLocalRandom.current().nextInt(1, pklength - 1);
+				pklength--;
+				c = new Candidate(pkList.get(randomNum), data[i]);
+				pkList.remove(randomNum);
+			} else {
+				c = new Candidate(pkList.get(0), data[i]);
+				pkList.remove(0);
+			}
+		}
 	}
 	
 	// Method for testing population of votes array
