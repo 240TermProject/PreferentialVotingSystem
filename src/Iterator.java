@@ -6,12 +6,17 @@ import java.util.Map.Entry;
 public class Iterator {
 	
 	//The round that we're on; Do we need one here and in the Round class if they're both protected?
+	// The answer to that question is no
 	protected int roundNum = 1;
 	//Candidate with the highest amount of votes
 	protected String highCand;
 	//Candidate with the lowest amount of votes; Do we need one here and in the Round class if they're both protected?
+	// We can actually delete these variables as they are not needed, high and low cand is now an "Entry"
 	protected String lowCand;
-	//Added this to manage candidate names.
+	// Making max and min class variables 
+	protected static Entry<String,Integer> minEntry = null;
+	protected static Entry<String,Integer> maxEntry = null;
+	private static String winner = null;
 
 	
 	public Iterator(ArrayList<ArrayList<String>> votes){
@@ -31,13 +36,15 @@ public class Iterator {
 				voteTallies.put(votes.get(i).get(j), voteTallies.getOrDefault(votes.get(i).get(j), 0) + 1);
 			}
 		}
-		checkMajority(voteTallies, size);
+		if (!checkMajority(voteTallies, size)) {
+			initiateRound(votes);
+		}
 		
 	}
 	
 	//checks to see if a candidate has more than 50% of the vote
-	private static void checkMajority(HashMap<String, Integer> tallied, int numberOfVotes){
-		Entry<String,Integer> maxEntry = null;
+	private static boolean checkMajority(HashMap<String, Integer> tallied, int numberOfVotes){
+		
 
 		for(Entry<String,Integer> entry : tallied.entrySet()) {
 		    if (maxEntry == null || entry.getValue() > maxEntry.getValue()) {
@@ -49,27 +56,31 @@ public class Iterator {
 		if (maxEntry.getValue()/numberOfVotes > 0.5) {
 			double percentage = maxEntry.getValue()/numberOfVotes;
 			setWinner(maxEntry.getKey(),percentage);
+			return true;
 		}
-		Entry<String,Integer> minEntry = null;
+		
 		
 		for(Entry<String,Integer> entry : tallied.entrySet()) {
 		    if (minEntry == null || entry.getValue() < minEntry.getValue()) {
 		        minEntry = entry;
 		    }
 		}
+		return false;
+		
 		
 	}
 	
 	//Starts the round, or starts another round
-	private void initiateRound(){
-		
+	private static void initiateRound(ArrayList<ArrayList<String>> votes){
+		votes = Round.removeLow(votes, minEntry.getKey());
 	}
 	
 	//Sends the winner to the ElectionProcess
-	private static String setWinner(String name, double percentageOfVote){
-		return (name + " | " + percentageOfVote);
+	private static void setWinner(String name, double percentageOfVote){
+		winner = (name + " | " + percentageOfVote);
 	}
-	public static String getWinner(String winner) {
+	protected static String getWinner() {
+		
 		return winner;
 	}
 }
