@@ -33,7 +33,7 @@ public class ElectionProcess {
 			Voter newVoter = new Voter(scanVoters.nextLine());
 			int[] ranks = new int[candNum];
 			//add try catch for null ranks/votes inn the index i
-			for (int i = 0; i <= candNum; i++){
+			for (int i = 0; i < candNum; i++){
 				ranks[i] = scanVoters.nextInt();
 			}
 			newVoter.loadVote(ranks);
