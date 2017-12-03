@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -37,7 +38,7 @@ public class Iterator {
 			}
 		}
 		if (!checkMajority(voteTallies, size)) {
-			initiateRound(votes);
+			initiateRound(votes, voteTallies);
 		}
 		
 	}
@@ -71,8 +72,13 @@ public class Iterator {
 	}
 	
 	//Starts the round, or starts another round
-	private static void initiateRound(ArrayList<ArrayList<String>> votes){
+	private static void initiateRound(ArrayList<ArrayList<String>> votes, HashMap<String, Integer> voteTallies){
+		List<String> losers = Round.checkTie(voteTallies, minEntry);
+		if (losers.size() == 1) {
 		votes = Round.removeLow(votes, minEntry.getKey());
+		} else {
+			String loser = Round.tieBreakerOne(votes, losers);
+		}
 	}
 	
 	//Sends the winner to the ElectionProcess
