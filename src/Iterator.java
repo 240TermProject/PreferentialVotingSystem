@@ -91,6 +91,8 @@ public class Iterator {
 				String loser = Round.tieBreakerOne(votes, losers);
 				votes = Round.removeLow(votes, loser);
 			}
+			// May need to create a new hashmap at this point to pass back into checkMajority
+			// But, end game, we need to call checkMajority to set winner on all cases.
 			break;
 		case 2:
 			List<String> losersOne = Round.checkTie(voteTallies, minEntry);
