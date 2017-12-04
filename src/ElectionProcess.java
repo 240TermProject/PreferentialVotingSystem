@@ -12,17 +12,18 @@ public class ElectionProcess {
 	private static ElectionProcess oneElection = null;
 	private static boolean electionAvailable = true;
 
-	private ElectionProcess() {
-
+	private ElectionProcess(String URL, String Method) {
+		this.beginElection();
+		
 	}
 
-	public static ElectionProcess getInstance() {
+	public static ElectionProcess getInstance(String URL, String Method) {
 		//if there hasn't been an election
 		if (electionAvailable) {
 			//double check to see if there's no instantiation
 			if (oneElection == null) {
 				//create an election
-				oneElection = new ElectionProcess();
+				oneElection = new ElectionProcess(URL, Method);
 			}
 			//an election is available, so set to false
 			electionAvailable = false;
