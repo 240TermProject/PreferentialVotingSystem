@@ -80,7 +80,7 @@ public class Iterator {
 	// Starts the round, or starts another round
 	private static void initiateRound(ArrayList<ArrayList<String>> votes, HashMap<String, Integer> voteTallies) {
 		int removalMethod = ElectionProcess.removalChoice();
-		switch (removalMethod) {
+		switch (ElectionProcess.methodNum) {
 		case -1:
 			System.out.println("A fatal error has occured, an invalid removal choice has been passed to Iterator");		
 		case 1:

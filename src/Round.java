@@ -32,7 +32,7 @@ public class Round {
 	// call pickTieBreaker?
 
 	protected static List<String> checkTie(HashMap<String, Integer> tallied, Entry<String, Integer> minEntry) {
-		List<String> tieNames = null;
+		List<String> tieNames = new ArrayList<String>();
 		tieNames.add(minEntry.getKey());
 		for (Entry<String, Integer> entry : tallied.entrySet()) {
 			if (entry.getValue() == minEntry.getValue() && (!tieNames.contains(entry.getKey()))) {
@@ -57,14 +57,14 @@ public class Round {
 	protected static String tieBreakerOne(ArrayList<ArrayList<String>> votes, List<String> losers) {
 		Entry<String, Integer> maxEntry = null;
 		String loser = null;
-		List<String> tieLosers = null;
+		List<String> tieLosers = new ArrayList<String>();
 		HashMap<String, Integer> biggestLosers = new HashMap<String, Integer>();
 		// I dont think we need this - HashMap<String, Integer> voteTallies = new
 		// HashMap<>();
 		for (int i = 0; i < votes.size(); i++) {
 			int ballot = votes.get(i).size();
-			biggestLosers.put(votes.get(i).get(ballot - 2),
-					biggestLosers.getOrDefault(votes.get(i).get(ballot - 2), 0) + 1);
+			biggestLosers.put(votes.get(i).get(ballot - 1),
+					biggestLosers.getOrDefault(votes.get(i).get(ballot - 1), 0) + 1);
 		}
 		for (Entry<String, Integer> entry : biggestLosers.entrySet()) {
 			if (maxEntry == null || entry.getValue() > maxEntry.getValue()) {
@@ -108,8 +108,9 @@ public class Round {
 	protected static ArrayList<ArrayList<String>> removeAll(ArrayList<ArrayList<String>> votes, List<String> losers) {
 		for (int i = 0; i < votes.size(); i++) {
 			for (int j = 0; j < losers.size(); j++) {
-				if (votes.get(i).get(0).equals(losers.get(j))) {
-					votes.get(i).remove(0);
+				if (votes.get(i).contains(losers.get(j))) {
+					int elementToRemove = votes.get(i).lastIndexOf(losers.get(j));
+					votes.get(i).remove(elementToRemove);
 				}
 			}
 		}

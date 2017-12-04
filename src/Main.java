@@ -7,6 +7,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import java.awt.*;
+import java.io.IOException;
+
 import javafx.geometry.Pos;
 import javafx.stage.Stage;
 import javafx.scene.Node;
@@ -84,7 +86,11 @@ ObservableList<String> drop = FXCollections.observableArrayList(
 		voteButton.setOnAction(new EventHandler<ActionEvent>(){
 			@Override
 			public void handle(ActionEvent arg0) {
-			ElectionProcess e = ElectionProcess.getInstance(urlTextField.getText(), (String) comboBox.getValue());
+			try {
+				ElectionProcess e = ElectionProcess.getInstance(urlTextField.getText(), (String) comboBox.getValue());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			comboBox.getValue();
 			}
 		});

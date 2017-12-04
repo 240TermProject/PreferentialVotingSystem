@@ -9,19 +9,19 @@ public class Votes {
 	// Contains all of the voter's globalIDs
 	private static ArrayList<String> voterIDs = new ArrayList<String>();
 	// Contains all of a voter's individual votes
-	private static ArrayList<ArrayList<String>> indVotes = new ArrayList<ArrayList<String>>();
+	protected static ArrayList<ArrayList<String>> indVotes = new ArrayList<ArrayList<String>>();
 	//Checks to see if there are no candidates in the arraylist
 	static boolean noCandidates = true;
 
-	public static void Votes() throws IOException {
+	public static ArrayList<ArrayList<String>> Votes() throws IOException {
 		// Set URL of raw vote data
-		URL rawResults = new URL("http://www.acmaitp.org/test.txt");
+		URL rawResults = new URL(ElectionProcess.URL);
 		// Establish Scanner for the URL file
 		Scanner dataScanner = new Scanner(rawResults.openStream()).useDelimiter("[,|\n|,\r]+");
 		// Start processing data
 		while (dataScanner.hasNextLine()) {
 			String vote = dataScanner.nextLine();
-			String[] data = vote.split("[,]");
+			String[] data = vote.split("[,|:]");
 			if(noCandidates) {
 				storeCandidates(data);
 				noCandidates = false;
@@ -34,8 +34,9 @@ public class Votes {
 
 		}
 		// Print statements for testing
-		printArray();
-		printIDs();
+		//printArray();
+		//printIDs();
+		return indVotes;
 	}
 
 	// check to see if we used this globalID before
