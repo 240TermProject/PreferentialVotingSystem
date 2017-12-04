@@ -39,6 +39,7 @@ public class Round {
 		       tieNames.add(entry.getKey());
 		    }
 		}
+		
 		return tieNames;
 		
 		//  NEED TO ADD CODE HERE TO CHECK WITH MAIN REGARDING A TIE BREAKING METHOD.
@@ -52,8 +53,31 @@ public class Round {
 	// Tie breaker one looks for the candidate with the most second to last choice votes if a tie is 
 	// found at that level, tie breaker two is called to randomly pick someone to remove.
 	protected static String tieBreakerOne(ArrayList<ArrayList<String>> votes, List<String> losers) {
+		Entry<String,Integer> maxEntry = null;
 		String loser = null;
 		List <String> tieLosers = null;
+		HashMap <String, Integer> biggestLosers = new HashMap<String, Integer>();
+		HashMap<String, Integer> voteTallies = new HashMap<>();
+		for (int i = 0; i < votes.size(); i++) {
+			int ballot = votes.get(i).size();
+			biggestLosers.put(votes.get(i).get(ballot-2), voteTallies.getOrDefault(votes.get(i).get(ballot-2), 0) + 1);
+		}
+		for (Entry<String, Integer> entry : biggestLosers.entrySet()) {
+			if (maxEntry == null || entry.getValue() > maxEntry.getValue()) {
+				maxEntry = entry;
+			}
+		}
+		for(Entry<String,Integer> entry : biggestLosers.entrySet()) {
+		    if (entry.getValue() == maxEntry.getValue() && (!tieLosers.contains(entry.getKey()))) {
+		       tieLosers.add(entry.getKey());
+		    }
+		}
+		if (tieLosers.size()== 1) {
+			return tieLosers.get(0);
+		} else {
+			String finalRoundLoser = tieBreakerTwo(tieLosers);
+			return finalRoundLoser;
+		}
 	/*
 	 * These comments should be removed... This is an interim commit so I can get help writing logic.
 	 * My approach is this...
@@ -66,11 +90,12 @@ public class Round {
 	 * going to shut my eyes for a bit and return to it with fresh eyes. Please let me know if you have done
 	 * a push to this code so I can look at it and understand it before I start at it again.
 	 */
-		return loser;
 
 	}
 
-	private static void tieBreakerTwo() {
+	private static String tieBreakerTwo(List<String> tieLosers) {
+		int random = (int)Math.random()*tieLosers.size();
+		return tieLosers.get(random);
 
 	}
 
