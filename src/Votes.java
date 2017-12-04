@@ -5,7 +5,7 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Votes extends main{
+public class Votes {
 	// Contains all of the voter's globalIDs
 	private static ArrayList<String> voterIDs = new ArrayList<String>();
 	// Contains all of a voter's individual votes

@@ -8,8 +8,7 @@ public class Iterator {
 
 	// The round that we're on; Do we need one here and in the Round class if
 	// they're both protected?
-	// The answer to that question is no
-	protected int roundNum = 1;
+
 	// Candidate with the highest amount of votes
 	protected String highCand;
 	// Candidate with the lowest amount of votes; Do we need one here and in the

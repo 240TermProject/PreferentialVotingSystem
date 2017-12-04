@@ -57,10 +57,10 @@ public class Round {
 		String loser = null;
 		List <String> tieLosers = null;
 		HashMap <String, Integer> biggestLosers = new HashMap<String, Integer>();
-		HashMap<String, Integer> voteTallies = new HashMap<>();
+		// I dont think we need this - HashMap<String, Integer> voteTallies = new HashMap<>();
 		for (int i = 0; i < votes.size(); i++) {
 			int ballot = votes.get(i).size();
-			biggestLosers.put(votes.get(i).get(ballot-2), voteTallies.getOrDefault(votes.get(i).get(ballot-2), 0) + 1);
+			biggestLosers.put(votes.get(i).get(ballot-2), biggestLosers.getOrDefault(votes.get(i).get(ballot-2), 0) + 1);
 		}
 		for (Entry<String, Integer> entry : biggestLosers.entrySet()) {
 			if (maxEntry == null || entry.getValue() > maxEntry.getValue()) {
