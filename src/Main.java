@@ -86,7 +86,6 @@ ObservableList<String> drop = FXCollections.observableArrayList(
 			public void handle(ActionEvent arg0) {
 			ElectionProcess e = ElectionProcess.getInstance(urlTextField.getText(), (String) comboBox.getValue());
 			comboBox.getValue();
-			test.setText( urlTextField.getText() + " " +(String) comboBox.getValue());
 			}
 		});
 		

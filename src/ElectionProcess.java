@@ -7,12 +7,15 @@ public class ElectionProcess {
 	 * 
 	 * Every Voter's vote
 	 */
-	File candidates = new File("candidates.txt");
+	private static String URL = "";
+	private static int methodNum = 0;
     //Singleton design pattern
 	private static ElectionProcess oneElection = null;
 	private static boolean electionAvailable = true;
 
 	private ElectionProcess(String URL, String Method) {
+		this.URL = URL;
+		this.methodNum = Integer.parseInt(Method.charAt(Method.length() - 1) + "");
 		this.beginElection();
 		
 	}
@@ -43,7 +46,7 @@ public class ElectionProcess {
 
 	// starts the election
 	public void beginElection() {
-
+		
 	}
 
 	// ends the election
