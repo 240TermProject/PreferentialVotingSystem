@@ -81,6 +81,8 @@ public class Iterator {
 	private static void initiateRound(ArrayList<ArrayList<String>> votes, HashMap<String, Integer> voteTallies) {
 		int removalMethod = ElectionProcess.removalChoice();
 		switch (removalMethod) {
+		case -1:
+			System.out.println("A fatal error has occured, an invalid removal choice has been passed to Iterator");		
 		case 1:
 			List<String> losers = Round.checkTie(voteTallies, minEntry);
 			if (losers.size() == 1) {
@@ -105,10 +107,10 @@ public class Iterator {
 			break;
 		default:
 			List<String> losersThree = Round.checkTie(voteTallies, minEntry);
-			if (losers.size() == 1) {
+			if (losersThree.size() == 1) {
 				votes = Round.removeLow(votes, minEntry.getKey());
 			} else {
-				String loser = Round.tieBreakerOne(votes, losers);
+				String loser = Round.tieBreakerOne(votes, losersThree);
 				votes = Round.removeLow(votes, loser);
 			}
 			break;

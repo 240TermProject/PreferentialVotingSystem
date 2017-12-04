@@ -15,6 +15,12 @@ public class ElectionProcess {
 	private ElectionProcess() {
 
 	}
+	
+	protected static int removalChoice() {
+		//  This is where I need an integer from 1 to 3 to be returned for removal choice
+		int removalChoice = -1;
+		return removalChoice;
+	}
 
 	public static ElectionProcess getInstance() {
 		//if there hasn't been an election
