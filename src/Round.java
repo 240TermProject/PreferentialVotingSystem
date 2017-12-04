@@ -99,13 +99,13 @@ public class Round {
 
 	}
 
-	private static String tieBreakerTwo(List<String> tieLosers) {
+	protected static String tieBreakerTwo(List<String> tieLosers) {
 		int random = (int) Math.random() * tieLosers.size();
 		return tieLosers.get(random);
 
 	}
 
-	private static ArrayList<ArrayList<String>> removeAll(ArrayList<ArrayList<String>> votes, List<String> losers) {
+	protected static ArrayList<ArrayList<String>> removeAll(ArrayList<ArrayList<String>> votes, List<String> losers) {
 		for (int i = 0; i < votes.size(); i++) {
 			for (int j = 0; j < losers.size(); j++) {
 				if (votes.get(i).get(0).equals(losers.get(j))) {

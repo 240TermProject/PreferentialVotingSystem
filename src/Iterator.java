@@ -40,7 +40,8 @@ public class Iterator {
 
 			// Uncomment the following line and delete the proceeding statement if voter ID
 			// is still included in ArrayList
-			//voteTallies.put(votes.get(i).get(1), voteTallies.getOrDefault(votes.get(i).get(1), 0) + 1);
+			// voteTallies.put(votes.get(i).get(1),
+			// voteTallies.getOrDefault(votes.get(i).get(1), 0) + 1);
 			// This is the code if we remove voter ID in the original ArrayList
 			voteTallies.put(votes.get(i).get(0), voteTallies.getOrDefault(votes.get(i).get(0), 0) + 1);
 		}
@@ -78,6 +79,41 @@ public class Iterator {
 
 	// Starts the round, or starts another round
 	private static void initiateRound(ArrayList<ArrayList<String>> votes, HashMap<String, Integer> voteTallies) {
+		int removalMethod = ElectionProcess.removalChoice();
+		switch (removalMethod) {
+		case 1:
+			List<String> losers = Round.checkTie(voteTallies, minEntry);
+			if (losers.size() == 1) {
+				votes = Round.removeLow(votes, minEntry.getKey());
+			} else {
+				String loser = Round.tieBreakerOne(votes, losers);
+				votes = Round.removeLow(votes, loser);
+			}
+			break;
+		case 2:
+			List<String> losersOne = Round.checkTie(voteTallies, minEntry);
+			if (losersOne.size() == 1) {
+				votes = Round.removeLow(votes, minEntry.getKey());
+			} else {
+				String nameToRemove = Round.tieBreakerTwo(losersOne);
+				Round.removeLow(votes, nameToRemove);
+			}
+			break;
+		case 3:
+			List<String> losersTwo = Round.checkTie(voteTallies, minEntry);
+			votes = Round.removeAll(votes, losersTwo);
+			break;
+		default:
+			List<String> losersThree = Round.checkTie(voteTallies, minEntry);
+			if (losers.size() == 1) {
+				votes = Round.removeLow(votes, minEntry.getKey());
+			} else {
+				String loser = Round.tieBreakerOne(votes, losers);
+				votes = Round.removeLow(votes, loser);
+			}
+			break;
+		}
+
 		List<String> losers = Round.checkTie(voteTallies, minEntry);
 		if (losers.size() == 1) {
 			votes = Round.removeLow(votes, minEntry.getKey());
