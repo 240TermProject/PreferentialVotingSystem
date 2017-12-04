@@ -34,68 +34,87 @@ public class Round {
 	protected static List<String> checkTie(HashMap<String, Integer> tallied, Entry<String, Integer> minEntry) {
 		List<String> tieNames = null;
 		tieNames.add(minEntry.getKey());
-		for(Entry<String,Integer> entry : tallied.entrySet()) {
-		    if (entry.getValue() == minEntry.getValue() && (!tieNames.contains(entry.getKey()))) {
-		       tieNames.add(entry.getKey());
-		    }
+		for (Entry<String, Integer> entry : tallied.entrySet()) {
+			if (entry.getValue() == minEntry.getValue() && (!tieNames.contains(entry.getKey()))) {
+				tieNames.add(entry.getKey());
+			}
 		}
-		
+
 		return tieNames;
-		
-		//  NEED TO ADD CODE HERE TO CHECK WITH MAIN REGARDING A TIE BREAKING METHOD.
-		//  AT THIS POINT IN THE PROGRAM WE HAVE IDENTIFIED THAT THERE IS A TIE AND WE HAVE
-		//  A LIST OF THE TIE NAMES CALLES tieNames
-		
-		
+
+		// NEED TO ADD CODE HERE TO CHECK WITH MAIN REGARDING A TIE BREAKING METHOD.
+		// AT THIS POINT IN THE PROGRAM WE HAVE IDENTIFIED THAT THERE IS A TIE AND WE
+		// HAVE
+		// A LIST OF THE TIE NAMES CALLES tieNames
+
 	}
 
 	// Logic for handling one of the two tiebreaker methods
-	// Tie breaker one looks for the candidate with the most second to last choice votes if a tie is 
-	// found at that level, tie breaker two is called to randomly pick someone to remove.
+	// Tie breaker one looks for the candidate with the most second to last choice
+	// votes if a tie is
+	// found at that level, tie breaker two is called to randomly pick someone to
+	// remove.
 	protected static String tieBreakerOne(ArrayList<ArrayList<String>> votes, List<String> losers) {
-		Entry<String,Integer> maxEntry = null;
+		Entry<String, Integer> maxEntry = null;
 		String loser = null;
-		List <String> tieLosers = null;
-		HashMap <String, Integer> biggestLosers = new HashMap<String, Integer>();
-		// I dont think we need this - HashMap<String, Integer> voteTallies = new HashMap<>();
+		List<String> tieLosers = null;
+		HashMap<String, Integer> biggestLosers = new HashMap<String, Integer>();
+		// I dont think we need this - HashMap<String, Integer> voteTallies = new
+		// HashMap<>();
 		for (int i = 0; i < votes.size(); i++) {
 			int ballot = votes.get(i).size();
-			biggestLosers.put(votes.get(i).get(ballot-2), biggestLosers.getOrDefault(votes.get(i).get(ballot-2), 0) + 1);
+			biggestLosers.put(votes.get(i).get(ballot - 2),
+					biggestLosers.getOrDefault(votes.get(i).get(ballot - 2), 0) + 1);
 		}
 		for (Entry<String, Integer> entry : biggestLosers.entrySet()) {
 			if (maxEntry == null || entry.getValue() > maxEntry.getValue()) {
 				maxEntry = entry;
 			}
 		}
-		for(Entry<String,Integer> entry : biggestLosers.entrySet()) {
-		    if (entry.getValue() == maxEntry.getValue() && (!tieLosers.contains(entry.getKey()))) {
-		       tieLosers.add(entry.getKey());
-		    }
+		for (Entry<String, Integer> entry : biggestLosers.entrySet()) {
+			if (entry.getValue() == maxEntry.getValue() && (!tieLosers.contains(entry.getKey()))) {
+				tieLosers.add(entry.getKey());
+			}
 		}
-		if (tieLosers.size()== 1) {
+		if (tieLosers.size() == 1) {
 			return tieLosers.get(0);
 		} else {
 			String finalRoundLoser = tieBreakerTwo(tieLosers);
 			return finalRoundLoser;
 		}
-	/*
-	 * These comments should be removed... This is an interim commit so I can get help writing logic.
-	 * My approach is this...
-	 * tieBreakerOne will take in a list of the tie losers.  A new hashmap will be created in this method
-	 * to tally the number of second to last choice votes.  The candidate with the larger amount of second
-	 * to last choice votes will be returned in the form of a string so that it can be passed to removeLow
-	 * to eliminate that candidate.  If in the event of a tie in the second round of tie eliminations, we can
-	 * pass the List of losers created here to tieBreakerTwo to eliminate a random person.  Randomization 
-	 * should be relatively easy.  My eyes are crossing with the amount of code ive been looking at.  I'm 
-	 * going to shut my eyes for a bit and return to it with fresh eyes. Please let me know if you have done
-	 * a push to this code so I can look at it and understand it before I start at it again.
-	 */
+		/*
+		 * These comments should be removed... This is an interim commit so I can get
+		 * help writing logic. My approach is this... tieBreakerOne will take in a list
+		 * of the tie losers. A new hashmap will be created in this method to tally the
+		 * number of second to last choice votes. The candidate with the larger amount
+		 * of second to last choice votes will be returned in the form of a string so
+		 * that it can be passed to removeLow to eliminate that candidate. If in the
+		 * event of a tie in the second round of tie eliminations, we can pass the List
+		 * of losers created here to tieBreakerTwo to eliminate a random person.
+		 * Randomization should be relatively easy. My eyes are crossing with the amount
+		 * of code ive been looking at. I'm going to shut my eyes for a bit and return
+		 * to it with fresh eyes. Please let me know if you have done a push to this
+		 * code so I can look at it and understand it before I start at it again.
+		 */
 
 	}
 
 	private static String tieBreakerTwo(List<String> tieLosers) {
-		int random = (int)Math.random()*tieLosers.size();
+		int random = (int) Math.random() * tieLosers.size();
 		return tieLosers.get(random);
+
+	}
+
+	private static ArrayList<ArrayList<String>> removeAll(ArrayList<ArrayList<String>> votes, List<String> losers) {
+		for (int i = 0; i < votes.size(); i++) {
+			for (int j = 0; j < losers.size(); j++) {
+				if (votes.get(i).get(0).equals(losers.get(j))) {
+					votes.get(i).remove(0);
+				}
+			}
+		}
+
+		return votes;
 
 	}
 
