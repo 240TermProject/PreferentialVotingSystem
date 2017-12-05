@@ -103,7 +103,7 @@ public class Iterator {
 			}
 		}
 		
-		System.out.println("at the start of initiateRound");
+		//System.out.println("at the start of initiateRound");
 		switch (ElectionProcess.methodNum) {
 		case -1:
 			System.out.println("A fatal error has occured, an invalid removal choice has been passed to Iterator");		
@@ -111,11 +111,11 @@ public class Iterator {
 			ArrayList<ArrayList<String>>newvotes = new ArrayList<ArrayList<String>>();
 			ArrayList<String> losers = Round.checkTie(voteTallies, minEntry);
 			if (losers.size() == 1) {
-				System.out.println("iterator.initiateRound - Passing to Round.removeLow: " + minEntry.getKey());
+				//System.out.println("iterator.initiateRound - Passing to Round.removeLow: " + minEntry.getKey());
 				newvotes = Round.removeLow(votes, minEntry.getKey());
 			} else {
 				String loser = Round.tieBreakerOne(votes, losers);
-				System.out.println("iterator.initiateRound - Passing to Round.removeLow: " + minEntry.getKey());
+				//System.out.println("iterator.initiateRound - Passing to Round.removeLow: " + minEntry.getKey());
 				newvotes = Round.removeLow(votes, loser);
 			}
 			tallyVotes(newvotes);
@@ -126,12 +126,12 @@ public class Iterator {
 			ArrayList<ArrayList<String>>newvotesTwo = new ArrayList<ArrayList<String>>();
 			ArrayList<String> losersOne = Round.checkTie(voteTallies, minEntry);
 			if (losersOne.size() == 1) {
-				System.out.println("iterator.initiateRound - Passing to Round.removeLow: " + minEntry.getKey());
+				//System.out.println("iterator.initiateRound - Passing to Round.removeLow: " + minEntry.getKey());
 
 				newvotesTwo = Round.removeLow(votes, minEntry.getKey());
 			} else {
 				String nameToRemove = Round.tieBreakerTwo(losersOne);
-				System.out.println("iterator.initiateRound - Passing to Round.removeLow: " + minEntry.getKey());
+				//System.out.println("iterator.initiateRound - Passing to Round.removeLow: " + minEntry.getKey());
 
 				newvotesTwo = Round.removeLow(votes, nameToRemove);
 			}
