@@ -16,6 +16,7 @@ public class Iterator {
 	// We can actually delete these variables as they are not needed, high and low
 	// cand is now an "Entry"
 	protected String lowCand;
+	protected static double percentage;
 	// Making max and min class variables
 	//protected static Entry<String, Integer> minEntry = null;
 	//protected static Entry<String, Integer> maxEntry = null;
@@ -59,30 +60,24 @@ public class Iterator {
 				minEntry = entry;
 			}
 		}
-		if (!checkMajority(voteTallies, size)) {
+		if (checkMajority(voteTallies, size, maxEntry)) {
+			setWinner(maxEntry.getKey(), percentage);
+		} else {	
 			initiateRound(votes, voteTallies);
 		}
 
 	}
 
 	// checks to see if a candidate has more than 50% of the vote
-	protected static boolean checkMajority(HashMap<String, Integer> tallied, int numberOfVotes) {
-		Entry<String, Integer> maxEntry = null;
-		for (Entry<String, Integer> entry : tallied.entrySet()) {
-			if (maxEntry == null || entry.getValue() > maxEntry.getValue()) {
-				maxEntry = entry;
-				System.out.println("This is the maxEntry: " + maxEntry.getKey());
-				System.out.println("This is the maxEntry: " + maxEntry.getValue());
-				System.out.println("This is the number of votes: " + numberOfVotes);
-			}
-		}
+	protected static boolean checkMajority(HashMap<String, Integer> tallied, int numberOfVotes, Entry<String, Integer> maxEntry2) {
 		
 
 		// Declare winner if the maxEntry has >50%
-		if (maxEntry.getValue() / numberOfVotes > 0.5) {
+		System.out.println("Percentage: " + (maxEntry2.getValue() / numberOfVotes));
+		if ((double)maxEntry2.getValue() / numberOfVotes > 0.5) {
 			System.out.println("Winner is set");
-			double percentage = maxEntry.getValue() / numberOfVotes;
-			setWinner(maxEntry.getKey(), percentage);
+			percentage = (double)maxEntry2.getValue() / numberOfVotes;
+			//setWinner(maxEntry2.getKey(), percentage);
 			return true;
 		}
 
