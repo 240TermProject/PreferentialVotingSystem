@@ -1,0 +1,42 @@
+/* Main layout fundamentals */
+.root{
+	-fx-background: #EEEEEE;
+    -fx-base: #CCCCCC;
+    -fx-font-family: 'Oxygen', sans-serif;
+    -fx-font-size: 14px;
+    -fx-text-fill: #333333;
+}
+
+/* Universal button design */
+.button { 
+    -fx-background-color: #FFC82E;
+    -fx-background-radius: 6px;
+    -fx-effect: dropshadow( one-pass-box , rgba(100, 100, 100, 0.5) , 0, 0.0 , 0 , 1 );
+    -fx-font-weight: 700;
+    -fx-text-fill: #6A0032;
+    -fx-padding: 10, 10, 10, 10;
+}
+.button:hover { 
+    -fx-background-color: #6A0032;
+    -fx-effect: dropshadow( one-pass-box , rgba(100, 100, 100, 0.5) , 0, 0.0 , 0 , 1 );
+     -fx-font-weight: 700;
+    -fx-text-fill: #FFFFFF !important;
+}
+
+.text-area {
+	-fx-highlight-fill: #D7A404;
+}
+
+.label {
+	-fx-font-family: 'Roboto Slab', serif;
+	-fx-font-size: 20;
+	-fx-font-weight: 700;
+	-fx-text-fill: #6A0032;
+	-fx-text-wrap: true;
+}
+
+.text {
+	-fx-text-wrap: true;
+	
+	
+}
