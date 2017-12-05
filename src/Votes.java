@@ -18,6 +18,7 @@ public class Votes {
 		URL rawResults = new URL(ElectionProcess.URL);
 		// Establish Scanner for the URL file
 		Scanner dataScanner = new Scanner(rawResults.openStream()).useDelimiter("[,|\n|,\r]+");
+		System.setProperty("line.separator", "|");
 		// Start processing data
 		while (dataScanner.hasNextLine()) {
 			String vote = dataScanner.nextLine();
@@ -33,9 +34,6 @@ public class Votes {
 			}
 
 		}
-		// Print statements for testing
-		//printArray();
-		//printIDs();
 		return indVotes;
 	}
 
@@ -59,7 +57,6 @@ public class Votes {
 			votes.add(data[i]);
 		}
 		indVotes.add(votes);
-
 	}
 	
 	public static void storeCandidates(String[] data) {

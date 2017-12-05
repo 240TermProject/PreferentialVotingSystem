@@ -168,8 +168,9 @@ public class Iterator {
 
 	// Sends the winner to the ElectionProcess
 	private static void setWinner(String name, double percentageOfVote) {
-		winner = (name + " | " + percentageOfVote);
-		System.out.println(winner);
+		int percentage = (int) (percentageOfVote * 100);
+		winner = ("Candidate Name: " + name + " won \nIn Round " + Round.roundNum + " with " + percentage + "%");
+		//System.out.println(winner);
 	}
 
 	protected static String getWinner() {

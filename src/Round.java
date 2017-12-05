@@ -10,7 +10,7 @@ public class Round {
 	protected int lowCand;
 	// The round that we're on; Do we need one here and in the Iterator class if
 	// they're both protected?
-	protected static int roundNum = 0;
+	protected static int roundNum = 1;
 	protected static List<String> tieNames;
 
 	public Round() {

@@ -80,8 +80,9 @@ ObservableList<String> drop = FXCollections.observableArrayList(
 		
 		
 		
-		Text test = new Text();
-		grid.add(test, 1, 7);
+		Text winner = new Text();
+		grid.add(winner, 1, 7);
+		
 		
 		voteButton.setOnAction(new EventHandler<ActionEvent>(){
 			@Override
@@ -92,10 +93,13 @@ ObservableList<String> drop = FXCollections.observableArrayList(
 				e.printStackTrace();
 			}
 			comboBox.getValue();
+			winner.setFont(Font.font("Times New Roman", FontWeight.NORMAL, 20));
+			winner.setText(Iterator.getWinner());
 			}
+			
 		});
 		
-		grid.add(new Label("Method 1:"), 0, 9);
+		grid.add(new Label("Method 1"), 0, 9);
 		grid.add(new Label("In the event of a tie for fewest first choice votes,"
 				+ "\n last choice votes will be counted"
 				+ "The candidate (out of the tied candidates) with\n"
@@ -106,11 +110,11 @@ ObservableList<String> drop = FXCollections.observableArrayList(
 				+ "\n a tied candidate from this "
 				+ "\n level will be chosen at random to be removed and "
 				+ "\n removal rounds will continue with this logic."), 0, 10);
-		grid.add(new Label("Method 2:"), 1, 9);
+		grid.add(new Label("Method 2"), 1, 9);
 		grid.add(new Label("Any candidates who tie for lowest first choice votes will\n"
 				+ "be chosen at random to be removed from the round."), 1,10);
 		
-		grid.add(new Label("Method 3:"), 3, 9);
+		grid.add(new Label("Method 3"), 3, 9);
 		grid.add(new Label("ALL candidates who tie for fewest first\n"
 				+ "choice votes will be eliminated."), 3, 10);	
 		
@@ -130,9 +134,8 @@ ObservableList<String> drop = FXCollections.observableArrayList(
 	}
 	
 	public static void main(String[] args) throws IOException {
-		//launch(args);
+		launch(args);
 		
-		System.out.println("main working");
-		ElectionProcess.getInstance("http://www.acmaitp.org/test.txt", "Method 2");
+
 	}
 }
