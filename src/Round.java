@@ -19,6 +19,7 @@ public class Round {
 
 	// Removes the lowest candidate
 	protected static ArrayList<ArrayList<String>> removeLow(ArrayList<ArrayList<String>> votes, String lowCand) {
+		System.out.println("at remove low");
 		roundNum++;
 		for (int i = 0; i < votes.size(); i++) {
 			System.out.println("Round.removeLow: " + lowCand);
@@ -28,28 +29,11 @@ public class Round {
 					votes.get(i).remove(j);
 				}
 			}
-			
-//			ArrayList<String> singleVote = votes.get(i);
-//			for (int j = 0; j < singleVote.size();j++) {
-//				System.out.println(singleVote.get(j));
-//			}
-//			votes.remove(i);
-//			int elementToRemove = singleVote.indexOf(lowCand);
-//			System.out.println("This is the element to remove: " + elementToRemove);
-//			if (elementToRemove == -1) {
-//				continue;
-//			}
-//			singleVote.remove(elementToRemove);
-//			for (int j = 0; j < singleVote.size();j++) {
-//				System.out.println(singleVote.get(j));
-//			}
-//			votes.add(singleVote);
-//			if (votes.get(i).get(0).equals(lowCand)) {
-//				System.out.println("Im in the if statement");
-//				votes.get(i).remove(0);
-//			}
+		
 		}
-		return votes;
+		
+		System.out.println("returning votes");
+		return(votes);
 	}
 
 	// Check to see if there is a tie; Possibly send up to Election class so it can

@@ -17,8 +17,8 @@ public class Iterator {
 	// cand is now an "Entry"
 	protected String lowCand;
 	// Making max and min class variables
-	protected static Entry<String, Integer> minEntry = null;
-	protected static Entry<String, Integer> maxEntry = null;
+	//protected static Entry<String, Integer> minEntry = null;
+	//protected static Entry<String, Integer> maxEntry = null;
 	private static String winner = null;
 
 	public Iterator(ArrayList<ArrayList<String>> votes) {
@@ -31,7 +31,7 @@ public class Iterator {
 	 */
 	protected static void tallyVotes(ArrayList<ArrayList<String>> votes) {
 		int size = votes.size();
-		HashMap<String, Integer> voteTallies = new HashMap<>();
+		HashMap<String, Integer> voteTallies = new HashMap<String, Integer>();
 		for (int i = 0; i < votes.size(); i++) {
 			// This will need to be edited depending on what we pass into Iterator...
 			// whether it included voter ID or not
@@ -45,7 +45,20 @@ public class Iterator {
 			// This is the code if we remove voter ID in the original ArrayList
 			voteTallies.put(votes.get(i).get(0), voteTallies.getOrDefault(votes.get(i).get(0), 0) + 1);
 		}
-
+		System.out.println(voteTallies);
+		Entry<String, Integer> minEntry = null;
+		Entry<String, Integer> maxEntry = null;
+		for (Entry<String, Integer> entry : voteTallies.entrySet()) {
+			if (maxEntry == null || entry.getValue() > maxEntry.getValue()) {
+				maxEntry = entry;
+			}
+		}
+		for (Entry<String, Integer> entry : voteTallies.entrySet()) {
+			if (minEntry == null || entry.getValue() < minEntry.getValue()) {
+				//System.out.println("This should set a new min");
+				minEntry = entry;
+			}
+		}
 		if (!checkMajority(voteTallies, size)) {
 			initiateRound(votes, voteTallies);
 		}
@@ -54,77 +67,95 @@ public class Iterator {
 
 	// checks to see if a candidate has more than 50% of the vote
 	protected static boolean checkMajority(HashMap<String, Integer> tallied, int numberOfVotes) {
-
+		Entry<String, Integer> maxEntry = null;
 		for (Entry<String, Integer> entry : tallied.entrySet()) {
 			if (maxEntry == null || entry.getValue() > maxEntry.getValue()) {
 				maxEntry = entry;
+				System.out.println("This is the maxEntry: " + maxEntry.getKey());
+				System.out.println("This is the maxEntry: " + maxEntry.getValue());
+				System.out.println("This is the number of votes: " + numberOfVotes);
 			}
 		}
+		
 
 		// Declare winner if the maxEntry has >50%
 		if (maxEntry.getValue() / numberOfVotes > 0.5) {
+			System.out.println("Winner is set");
 			double percentage = maxEntry.getValue() / numberOfVotes;
 			setWinner(maxEntry.getKey(), percentage);
 			return true;
 		}
 
-		for (Entry<String, Integer> entry : tallied.entrySet()) {
-			if (minEntry == null || entry.getValue() < minEntry.getValue()) {
-				minEntry = entry;
-			}
-		}
+		
 		return false;
 
 	}
 
 	// Starts the round, or starts another round
 	protected static void initiateRound(ArrayList<ArrayList<String>> votes, HashMap<String, Integer> voteTallies) {
+		Entry<String, Integer> minEntry = null;
+		Entry<String, Integer> maxEntry = null;
+		for (Entry<String, Integer> entry : voteTallies.entrySet()) {
+			if (maxEntry == null || entry.getValue() > maxEntry.getValue()) {
+				maxEntry = entry;
+			}
+		}
+		for (Entry<String, Integer> entry : voteTallies.entrySet()) {
+			if (minEntry == null || entry.getValue() < minEntry.getValue()) {
+				//System.out.println("This should set a new min");
+				minEntry = entry;
+			}
+		}
+		
 		System.out.println("at the start of initiateRound");
 		switch (ElectionProcess.methodNum) {
 		case -1:
 			System.out.println("A fatal error has occured, an invalid removal choice has been passed to Iterator");		
 		case 1:
+			ArrayList<ArrayList<String>>newvotes = new ArrayList<ArrayList<String>>();
 			ArrayList<String> losers = Round.checkTie(voteTallies, minEntry);
 			if (losers.size() == 1) {
 				System.out.println("iterator.initiateRound - Passing to Round.removeLow: " + minEntry.getKey());
-				votes = Round.removeLow(votes, minEntry.getKey());
+				newvotes = Round.removeLow(votes, minEntry.getKey());
 			} else {
 				String loser = Round.tieBreakerOne(votes, losers);
 				System.out.println("iterator.initiateRound - Passing to Round.removeLow: " + minEntry.getKey());
-				votes = Round.removeLow(votes, loser);
+				newvotes = Round.removeLow(votes, loser);
 			}
-			tallyVotes(votes);
+			tallyVotes(newvotes);
 			// May need to create a new hashmap at this point to pass back into checkMajority
 			// But, end game, we need to call checkMajority to set winner on all cases.
 			break;
 		case 2:
+			ArrayList<ArrayList<String>>newvotesTwo = new ArrayList<ArrayList<String>>();
 			ArrayList<String> losersOne = Round.checkTie(voteTallies, minEntry);
 			if (losersOne.size() == 1) {
 				System.out.println("iterator.initiateRound - Passing to Round.removeLow: " + minEntry.getKey());
 
-				votes = Round.removeLow(votes, minEntry.getKey());
+				newvotesTwo = Round.removeLow(votes, minEntry.getKey());
 			} else {
 				String nameToRemove = Round.tieBreakerTwo(losersOne);
 				System.out.println("iterator.initiateRound - Passing to Round.removeLow: " + minEntry.getKey());
 
-				Round.removeLow(votes, nameToRemove);
+				newvotesTwo = Round.removeLow(votes, nameToRemove);
 			}
-			tallyVotes(votes);
+			tallyVotes(newvotesTwo);
 
 			break;
 		case 3:
+			ArrayList<ArrayList<String>>newvotesThree = new ArrayList<ArrayList<String>>();
 			ArrayList<String> losersTwo = Round.checkTie(voteTallies, minEntry);
-			votes = Round.removeAll(votes, losersTwo);
-			tallyVotes(votes);
+			newvotesThree  = Round.removeAll(votes, losersTwo);
+			tallyVotes(newvotesThree);
 
 			break;
 		default:
-			List<String> losersThree = Round.checkTie(voteTallies, minEntry);
+			ArrayList<String> losersThree = Round.checkTie(voteTallies, minEntry);
 			if (losersThree.size() == 1) {
-				votes = Round.removeLow(votes, minEntry.getKey());
+				//votes = Round.removeLow(votes, minEntry.getKey());
 			} else {
 				String loser = Round.tieBreakerOne(votes, losersThree);
-				votes = Round.removeLow(votes, loser);
+				//votes = Round.removeLow(votes, loser);
 			}
 			tallyVotes(votes);
 
