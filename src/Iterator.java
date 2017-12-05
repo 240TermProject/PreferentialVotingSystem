@@ -30,6 +30,7 @@ public class Iterator {
 	 * votes from the Votes class
 	 */
 	private static void tallyVotes(ArrayList<ArrayList<String>> votes) {
+		System.out.println("tallying votes");
 		int size = votes.size();
 		HashMap<String, Integer> voteTallies = new HashMap<>();
 		for (int i = 0; i < votes.size(); i++) {
@@ -54,13 +55,11 @@ public class Iterator {
 
 	// checks to see if a candidate has more than 50% of the vote
 	private static boolean checkMajority(HashMap<String, Integer> tallied, int numberOfVotes) {
-
 		for (Entry<String, Integer> entry : tallied.entrySet()) {
 			if (maxEntry == null || entry.getValue() > maxEntry.getValue()) {
 				maxEntry = entry;
 			}
 		}
-
 		// Declare winner if the maxEntry has >50%
 		if (maxEntry.getValue() / numberOfVotes > 0.5) {
 			double percentage = maxEntry.getValue() / numberOfVotes;
@@ -79,6 +78,7 @@ public class Iterator {
 
 	// Starts the round, or starts another round
 	private static void initiateRound(ArrayList<ArrayList<String>> votes, HashMap<String, Integer> voteTallies) {
+		System.out.println("Round initiated");
 		int removalMethod = ElectionProcess.removalChoice();
 		switch (ElectionProcess.methodNum) {
 		case -1:
@@ -128,6 +128,7 @@ public class Iterator {
 	// Sends the winner to the ElectionProcess
 	private static void setWinner(String name, double percentageOfVote) {
 		winner = (name + " | " + percentageOfVote);
+		System.out.println(winner);
 	}
 
 	protected static String getWinner() {

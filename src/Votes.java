@@ -33,9 +33,6 @@ public class Votes {
 			}
 
 		}
-		// Print statements for testing
-		//printArray();
-		//printIDs();
 		return indVotes;
 	}
 

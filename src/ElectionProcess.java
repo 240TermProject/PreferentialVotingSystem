@@ -13,6 +13,8 @@ public class ElectionProcess {
     //Singleton design pattern
 	private static ElectionProcess oneElection = null;
 	private static boolean electionAvailable = true;
+	private static String winner = "";
+
 
 	private ElectionProcess(String url, String Method) throws IOException {
 		URL = url;
@@ -61,8 +63,8 @@ public class ElectionProcess {
 	}
 
 	// displays the winning candidate
-	public void displayWinner() {
-
+	public String displayWinner() {
+		return winner;
 	}
 
 	// assigns candidate their primary key

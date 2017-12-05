@@ -19,6 +19,7 @@ public class Round {
 
 	// Removes the lowest candidate
 	protected static ArrayList<ArrayList<String>> removeLow(ArrayList<ArrayList<String>> votes, String lowCand) {
+		System.out.println("Removing Low");
 		roundNum++;
 		for (int i = 0; i < votes.size(); i++) {
 			if (votes.get(i).get(0).equals(lowCand)) {
@@ -32,6 +33,7 @@ public class Round {
 	// call pickTieBreaker?
 
 	protected static List<String> checkTie(HashMap<String, Integer> tallied, Entry<String, Integer> minEntry) {
+		System.out.println("Checking Ties");
 		List<String> tieNames = new ArrayList<String>();
 		tieNames.add(minEntry.getKey());
 		for (Entry<String, Integer> entry : tallied.entrySet()) {
