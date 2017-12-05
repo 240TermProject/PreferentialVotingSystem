@@ -19,7 +19,7 @@ public class Round {
 
 	// Removes the lowest candidate
 	protected static ArrayList<ArrayList<String>> removeLow(ArrayList<ArrayList<String>> votes, String lowCand) {
-		System.out.println("at remove low");
+		Iterator.sb.append(lowCand + " was removed in Round " + roundNum + "\n");
 		roundNum++;
 		for (int i = 0; i < votes.size(); i++) {
 			System.out.println("Round.removeLow: " + lowCand);

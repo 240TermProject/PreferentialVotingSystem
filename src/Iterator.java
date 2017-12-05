@@ -21,6 +21,7 @@ public class Iterator {
 	//protected static Entry<String, Integer> minEntry = null;
 	//protected static Entry<String, Integer> maxEntry = null;
 	private static String winner = null;
+	protected static StringBuilder sb = new StringBuilder();
 
 	public Iterator(ArrayList<ArrayList<String>> votes) {
 		tallyVotes(votes);

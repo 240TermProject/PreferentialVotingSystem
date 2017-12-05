@@ -78,7 +78,8 @@ ObservableList<String> drop = FXCollections.observableArrayList(
 		comboBox.setPromptText("Please choose method");
 		grid.add(comboBox, 0 ,3);
 		
-		
+		Text rounds = new Text();
+		grid.add(rounds, 7, 1);
 		
 		Text winner = new Text();
 		grid.add(winner, 1, 7);
@@ -95,6 +96,8 @@ ObservableList<String> drop = FXCollections.observableArrayList(
 			comboBox.getValue();
 			winner.setFont(Font.font("Times New Roman", FontWeight.NORMAL, 20));
 			winner.setText(Iterator.getWinner());
+			rounds.setText(Iterator.sb.toString());
+			
 			}
 			
 		});
