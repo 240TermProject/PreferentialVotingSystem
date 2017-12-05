@@ -22,7 +22,7 @@ public class Round {
 		Iterator.sb.append(lowCand + " was removed in Round " + roundNum + "\n");
 		roundNum++;
 		for (int i = 0; i < votes.size(); i++) {
-			System.out.println("Round.removeLow: " + lowCand);
+			//System.out.println("Round.removeLow: " + lowCand);
 			for (int j = 0; j < votes.get(i).size(); j++) {
 				System.out.print(votes.get(i).get(j) + " : ");
 				if (votes.get(i).get(j).equals(lowCand)) {
@@ -32,7 +32,7 @@ public class Round {
 		
 		}
 		
-		System.out.println("returning votes");
+		//System.out.println("returning votes");
 		return(votes);
 	}
 
@@ -42,7 +42,7 @@ public class Round {
 	protected static ArrayList<String> checkTie(HashMap<String, Integer> tallied, Entry<String, Integer> minEntry) {
 		
 		ArrayList<String> tieNames = new ArrayList<String>();
-		System.out.println("Round Number" + roundNum);
+		//System.out.println("Round Number" + roundNum);
 		tieNames.add(minEntry.getKey());
 		for (Entry<String, Integer> entry : tallied.entrySet()) {
 			if (entry.getValue() == minEntry.getValue() && (!tieNames.contains(entry.getKey()))) {
