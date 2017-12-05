@@ -29,7 +29,7 @@ public class Iterator {
 	 * tallies how many votes each candidate has, We will need the ArrayList of
 	 * votes from the Votes class
 	 */
-	private static void tallyVotes(ArrayList<ArrayList<String>> votes) {
+	protected static void tallyVotes(ArrayList<ArrayList<String>> votes) {
 		int size = votes.size();
 		HashMap<String, Integer> voteTallies = new HashMap<>();
 		for (int i = 0; i < votes.size(); i++) {
@@ -53,7 +53,7 @@ public class Iterator {
 	}
 
 	// checks to see if a candidate has more than 50% of the vote
-	private static boolean checkMajority(HashMap<String, Integer> tallied, int numberOfVotes) {
+	protected static boolean checkMajority(HashMap<String, Integer> tallied, int numberOfVotes) {
 
 		for (Entry<String, Integer> entry : tallied.entrySet()) {
 			if (maxEntry == null || entry.getValue() > maxEntry.getValue()) {
@@ -78,34 +78,45 @@ public class Iterator {
 	}
 
 	// Starts the round, or starts another round
-	private static void initiateRound(ArrayList<ArrayList<String>> votes, HashMap<String, Integer> voteTallies) {
-		int removalMethod = ElectionProcess.removalChoice();
+	protected static void initiateRound(ArrayList<ArrayList<String>> votes, HashMap<String, Integer> voteTallies) {
+		System.out.println("at the start of initiateRound");
 		switch (ElectionProcess.methodNum) {
 		case -1:
 			System.out.println("A fatal error has occured, an invalid removal choice has been passed to Iterator");		
 		case 1:
-			List<String> losers = Round.checkTie(voteTallies, minEntry);
+			ArrayList<String> losers = Round.checkTie(voteTallies, minEntry);
 			if (losers.size() == 1) {
+				System.out.println("iterator.initiateRound - Passing to Round.removeLow: " + minEntry.getKey());
 				votes = Round.removeLow(votes, minEntry.getKey());
 			} else {
 				String loser = Round.tieBreakerOne(votes, losers);
+				System.out.println("iterator.initiateRound - Passing to Round.removeLow: " + minEntry.getKey());
 				votes = Round.removeLow(votes, loser);
 			}
+			tallyVotes(votes);
 			// May need to create a new hashmap at this point to pass back into checkMajority
 			// But, end game, we need to call checkMajority to set winner on all cases.
 			break;
 		case 2:
-			List<String> losersOne = Round.checkTie(voteTallies, minEntry);
+			ArrayList<String> losersOne = Round.checkTie(voteTallies, minEntry);
 			if (losersOne.size() == 1) {
+				System.out.println("iterator.initiateRound - Passing to Round.removeLow: " + minEntry.getKey());
+
 				votes = Round.removeLow(votes, minEntry.getKey());
 			} else {
 				String nameToRemove = Round.tieBreakerTwo(losersOne);
+				System.out.println("iterator.initiateRound - Passing to Round.removeLow: " + minEntry.getKey());
+
 				Round.removeLow(votes, nameToRemove);
 			}
+			tallyVotes(votes);
+
 			break;
 		case 3:
-			List<String> losersTwo = Round.checkTie(voteTallies, minEntry);
+			ArrayList<String> losersTwo = Round.checkTie(voteTallies, minEntry);
 			votes = Round.removeAll(votes, losersTwo);
+			tallyVotes(votes);
+
 			break;
 		default:
 			List<String> losersThree = Round.checkTie(voteTallies, minEntry);
@@ -115,16 +126,18 @@ public class Iterator {
 				String loser = Round.tieBreakerOne(votes, losersThree);
 				votes = Round.removeLow(votes, loser);
 			}
+			tallyVotes(votes);
+
 			break;
 		}
 
-		List<String> losers = Round.checkTie(voteTallies, minEntry);
-		if (losers.size() == 1) {
-			votes = Round.removeLow(votes, minEntry.getKey());
-		} else {
-			String loser = Round.tieBreakerOne(votes, losers);
-			votes = Round.removeLow(votes, loser);
-		}
+//		List<String> losers = Round.checkTie(voteTallies, minEntry);
+//		if (losers.size() == 1) {
+//			votes = Round.removeLow(votes, minEntry.getKey());
+//		} else {
+//			String loser = Round.tieBreakerOne(votes, losers);
+//			votes = Round.removeLow(votes, loser);
+//		}
 	}
 
 	// Sends the winner to the ElectionProcess

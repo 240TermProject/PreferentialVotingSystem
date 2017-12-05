@@ -129,7 +129,10 @@ ObservableList<String> drop = FXCollections.observableArrayList(
 //		}
 	}
 	
-	public static void main(String[] args) {
-		launch(args);
+	public static void main(String[] args) throws IOException {
+		//launch(args);
+		
+		System.out.println("main working");
+		ElectionProcess.getInstance("http://www.acmaitp.org/test.txt", "Method 2");
 	}
 }

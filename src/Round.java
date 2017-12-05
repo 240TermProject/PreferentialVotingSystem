@@ -21,9 +21,33 @@ public class Round {
 	protected static ArrayList<ArrayList<String>> removeLow(ArrayList<ArrayList<String>> votes, String lowCand) {
 		roundNum++;
 		for (int i = 0; i < votes.size(); i++) {
-			if (votes.get(i).get(0).equals(lowCand)) {
-				votes.get(i).remove(0);
+			System.out.println("Round.removeLow: " + lowCand);
+			for (int j = 0; j < votes.get(i).size(); j++) {
+				System.out.print(votes.get(i).get(j) + " : ");
+				if (votes.get(i).get(j).equals(lowCand)) {
+					votes.get(i).remove(j);
+				}
 			}
+			
+//			ArrayList<String> singleVote = votes.get(i);
+//			for (int j = 0; j < singleVote.size();j++) {
+//				System.out.println(singleVote.get(j));
+//			}
+//			votes.remove(i);
+//			int elementToRemove = singleVote.indexOf(lowCand);
+//			System.out.println("This is the element to remove: " + elementToRemove);
+//			if (elementToRemove == -1) {
+//				continue;
+//			}
+//			singleVote.remove(elementToRemove);
+//			for (int j = 0; j < singleVote.size();j++) {
+//				System.out.println(singleVote.get(j));
+//			}
+//			votes.add(singleVote);
+//			if (votes.get(i).get(0).equals(lowCand)) {
+//				System.out.println("Im in the if statement");
+//				votes.get(i).remove(0);
+//			}
 		}
 		return votes;
 	}
@@ -31,8 +55,10 @@ public class Round {
 	// Check to see if there is a tie; Possibly send up to Election class so it can
 	// call pickTieBreaker?
 
-	protected static List<String> checkTie(HashMap<String, Integer> tallied, Entry<String, Integer> minEntry) {
-		List<String> tieNames = new ArrayList<String>();
+	protected static ArrayList<String> checkTie(HashMap<String, Integer> tallied, Entry<String, Integer> minEntry) {
+		
+		ArrayList<String> tieNames = new ArrayList<String>();
+		System.out.println("Round Number" + roundNum);
 		tieNames.add(minEntry.getKey());
 		for (Entry<String, Integer> entry : tallied.entrySet()) {
 			if (entry.getValue() == minEntry.getValue() && (!tieNames.contains(entry.getKey()))) {
