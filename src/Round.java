@@ -24,7 +24,7 @@ public class Round {
 		for (int i = 0; i < votes.size(); i++) {
 			//System.out.println("Round.removeLow: " + lowCand);
 			for (int j = 0; j < votes.get(i).size(); j++) {
-				System.out.print(votes.get(i).get(j) + " : ");
+				//System.out.print(votes.get(i).get(j) + " : ");
 				if (votes.get(i).get(j).equals(lowCand)) {
 					votes.get(i).remove(j);
 				}

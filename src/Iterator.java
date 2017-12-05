@@ -47,7 +47,7 @@ public class Iterator {
 			// This is the code if we remove voter ID in the original ArrayList
 			voteTallies.put(votes.get(i).get(0), voteTallies.getOrDefault(votes.get(i).get(0), 0) + 1);
 		}
-		System.out.println(voteTallies);
+		//System.out.println(voteTallies);
 		Entry<String, Integer> minEntry = null;
 		Entry<String, Integer> maxEntry = null;
 		for (Entry<String, Integer> entry : voteTallies.entrySet()) {
@@ -62,8 +62,10 @@ public class Iterator {
 			}
 		}
 		if (checkMajority(voteTallies, size, maxEntry)) {
+			System.out.println(voteTallies);
 			setWinner(maxEntry.getKey(), percentage);
-		} else {	
+		} else {
+			System.out.println(voteTallies);
 			initiateRound(votes, voteTallies);
 		}
 
@@ -74,13 +76,14 @@ public class Iterator {
 		
 
 		// Declare winner if the maxEntry has >50%
-		System.out.println("Percentage: " + (maxEntry2.getValue() / numberOfVotes));
+		//System.out.println("Percentage: " + (maxEntry2.getValue() / numberOfVotes));
 		if ((double)maxEntry2.getValue() / numberOfVotes > 0.5) {
 			System.out.println("Winner is set");
 			percentage = (double)maxEntry2.getValue() / numberOfVotes;
 			//setWinner(maxEntry2.getKey(), percentage);
 			return true;
 		}
+
 
 		
 		return false;
@@ -112,10 +115,12 @@ public class Iterator {
 			ArrayList<String> losers = Round.checkTie(voteTallies, minEntry);
 			if (losers.size() == 1) {
 				//System.out.println("iterator.initiateRound - Passing to Round.removeLow: " + minEntry.getKey());
+				System.out.println("Removing: " + minEntry.getKey());
 				newvotes = Round.removeLow(votes, minEntry.getKey());
 			} else {
 				String loser = Round.tieBreakerOne(votes, losers);
 				//System.out.println("iterator.initiateRound - Passing to Round.removeLow: " + minEntry.getKey());
+				System.out.println("Removing: " + loser);
 				newvotes = Round.removeLow(votes, loser);
 			}
 			tallyVotes(newvotes);
@@ -127,12 +132,12 @@ public class Iterator {
 			ArrayList<String> losersOne = Round.checkTie(voteTallies, minEntry);
 			if (losersOne.size() == 1) {
 				//System.out.println("iterator.initiateRound - Passing to Round.removeLow: " + minEntry.getKey());
-
+				System.out.println("Removing: " + minEntry.getKey());
 				newvotesTwo = Round.removeLow(votes, minEntry.getKey());
 			} else {
 				String nameToRemove = Round.tieBreakerTwo(losersOne);
 				//System.out.println("iterator.initiateRound - Passing to Round.removeLow: " + minEntry.getKey());
-
+				System.out.println("Removing: " + nameToRemove);
 				newvotesTwo = Round.removeLow(votes, nameToRemove);
 			}
 			tallyVotes(newvotesTwo);
@@ -141,6 +146,7 @@ public class Iterator {
 		case 3:
 			ArrayList<ArrayList<String>>newvotesThree = new ArrayList<ArrayList<String>>();
 			ArrayList<String> losersTwo = Round.checkTie(voteTallies, minEntry);
+			System.out.println("Removing: " + losersTwo);
 			newvotesThree  = Round.removeAll(votes, losersTwo);
 			tallyVotes(newvotesThree);
 
